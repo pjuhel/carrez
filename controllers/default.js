@@ -1,6 +1,4 @@
 var dispatcher = require('./dispatcher.js');
-
-
 exports.install = function() {
 	F.route('/', view_index);
 	// or
@@ -16,6 +14,9 @@ function send_request() {
 	var self = this;
 	var model = self.body;
 	dispatcher.retrievedata(model.url, function (ad) {
-		self.view('index',{price:ad.averagePrice});
+		if(ad.goodDeal){
+			self.view('index3',{ad});
+		}
+		self.view('index2',{ad});
 	});
 }

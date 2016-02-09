@@ -1,6 +1,6 @@
-var request = require("request");
-var cheerio = require("cherrio");
-var JSON3 = require("json3");
+var request = require('request');
+var cheerio = require('cheerio');
+var JSON3 = require('json3');
 
 function getHtml(err, data, type, html, callback){
   if(err != null)
@@ -8,35 +8,33 @@ function getHtml(err, data, type, html, callback){
     console.log(err);
   }
   var cheerioHtml = cheerio.load(html);
-  var rawtext = "";
-  if(data.type == "appartement"){
+  var rawtext = '';
+  if(data.type == 'appartement'){
     rawText = cheerioHtml('#synthese > div.prices-summary.baseline > div.prices-summary__values > div:nth-child(2) > div.small-4.medium-2.columns.prices-summary__cell--median').text();
   }
   else{
     rawText = cheerioHtml('#synthese > div.prices-summary.baseline > div.prices-summary__values > div:nth-child(3) > div.small-4.medium-2.columns.prices-summary__cell--median').text();
   }
-  rawText = rawText.replace(new RegExp('[\u00a0, ,\n,'€']','g'),'');
-  var parsedJson = JSON3.parse(rawText);
-  data = generateJsonEstimation(parsedJson);
-  callback(data)
+  console.log(rawText);
+  rawText = rawText.replace(new RegExp('[\u00a0, ,\n,€]','g'),'');
+  console.log(rawText);
+  //var parsedJson = JSON3.parse(rawText);
+  floatedPrice = parseFloat(rawText);
+  data = generateJsonEstimation(floatedPrice,data, callback);
 }
 
-function generateJsonEstimation(originJson) {
-  var estimation = new estimation();
-  estimation.averagePrice = originJson.estimation;
+function generateJsonEstimation(price,data, callback) {
+  var estimation= new Object();
+  estimation.averagePrice = price;
   estimation.city = data.city;
   estimation.postalCode = data.postalCode;
-  return estimation;
+  callback(estimation);
 }
 
-function estimation() {
-  var city ="";
-  var postalCode="";
-  var averagePrice="";
-}
-
-module.exports = function makeRequest(url,data, callback) {
+module.exports = {makeRequest};
+function makeRequest(url,data, callback) {
   request(url, function(err, type, html){
+    console.log(url);
     getHtml(err, data, type, html, callback);
-  })
-})
+  });
+}

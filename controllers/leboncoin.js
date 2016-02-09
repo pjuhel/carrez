@@ -1,44 +1,43 @@
+var request = require('request');
+var cheerio = require('cheerio');
+var JSON3 = require('json3');
 
-var request = require("request");
-var cheerio = require("cherrio");
-var JSON3 = require("json3");
-
-function getHtml(err, type, html, callback){
+function getHtml(err, type, html, callback) {
   if(err != null)
   {
-    console.log(err);
+    return console.log(err);
   }
-  var cheerioHtml = cheerio.load(html);
-  var rawText = cheerioHtml('body script').first().text();
-  rawText = rawText.substring(rawText.indexOf('{'));
-  rawText = rawText.replace(new RegExp('\n  ','g'),'\n  "');
-  rawText = rawText.replace(new RegExp(' :','g'),'" :');
-  var parsedJson = JSON3.parse(rawText);
-  data = generateJsonAdd(parsedJson);
-  callback(data);
+  var parsedHtml = cheerio.load(html);
+var rawJson = parsedHtml('body script').first().text();
+rawJson = rawJson.substring(rawJson.indexOf('{'));
+rawJson = rawJson.replace(new RegExp('\n  ','g'),'\n  "');
+rawJson = rawJson.replace(new RegExp(' :','g'),'" :');
+var parsedJson = JSON3.parse(rawJson);
+generateJsonAdd(parsedJson,callback);
 }
 
-function generateJsonAdd(originJson) {
+function generateJsonAdd(originJson, callback) {
   var ad = new realEstateAd();
+  console.log(originJson);
   ad.surface = parseFloat(originJson.surface);
-  ad.postalCode = originJson.postalCode;
-  originJson.city.replace(new RegExp('_','g'),'-')
-  ad.city = originJson.city;
+  ad.postalCode = originJson.cp;
+  ad.city = originJson.city.replace(new RegExp('_','g'),'-');
   ad.kind = originJson.type;
-  ad.price = parseFloat(originJson.price.replace(new RegExp('[ ,\n]','g'),''));
-  return ad;
+  ad.price = parseFloat(originJson.prix);
+  callback(ad);
 }
 
 function realEstateAd() {
   var surface = 0;
-  var postalCode = "";
-  var city = "";
-  var kind = "";
+  var postalCode = '';
+  var city = '';
+  var kind = '';
   var price = 0;
 }
 
-module.exports = function makeRequest(url, callback) {
-  request(url, function(err, type, html){
-    getHtml(err, type, html, callback);
-  })
-})
+module.exports = {makeRequest}
+function makeRequest(url, callback) {
+  request(url, function(err, resp, html){
+    getHtml(err, resp, html, callback);
+  });
+}

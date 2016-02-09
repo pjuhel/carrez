@@ -1,0 +1,35 @@
+@{title('Something awesome')}
+<!-- <a href="#" id="logo"><img src="img/logo.png"></a> -->
+
+<div id="search_bar">
+	<form>
+		<input class="search_box" type="text" name="request" value="Entrez l'ULR de l'annonce leboncoin.fr" onFocus="if (this.value == 'Entrez l\'ULR de l\'annonce leboncoin.fr') this.value = '';" onBlur="if (this.value == '') this.value = 'Entrez l\'ULR de l\'annonce leboncoin.fr';">
+		<input class="search_button" title="Lancer la recherche" type="submit" class="search_go" value=" ">
+	</form>
+</div>
+
+<a href="#" id="logo"></a>
+
+<div id="result_display">
+	<div class="title"><h1>Résultat pour cette annonce</h1></div>
+
+	<div class="tiers">
+		<div class="sixieme sep">
+			<p>Prix</p>
+			<p class="red">@{model.ad.price}</p>
+		</div>
+	</div>
+
+	<div class="tiers">
+		<!-- <div class="odd"></div> -->
+		<div class="bad"></div>
+	</div>
+
+	<div class="tiers">
+		<div class="sixieme sep">
+			<p>Prix/M²</p>
+			<p class="red">@{model.ad.averagePrice}</p>
+		</div>
+	</div>
+
+</div>
