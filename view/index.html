@@ -1,0 +1,18 @@
+
+<!-- <a href="#" id="logo"><img src="img/logo.png"></a> -->
+
+<div id="search_bar">
+	<form action="/" method="POST">
+		<input class="search_box" type="text" name="request" value="@{model.url}"
+		 <!-->onFocus="if (this.value == 'Entrez l\'ULR de l\'annonce leboncoin.fr') this.value = '';"
+		 onBlur="if (this.value == '') this.value = 'Entrez l\'ULR de l\'annonce leboncoin.fr';" -->
+		<input class="search_button" title="Lancer la recherche" class="search_go" value=" ">
+	</form>
+</div>
+
+<a href="#" id="logo"></a>
+
+<div id="result_display">
+	<div class="title"><h1>Résultat pour cette annonce</h1></div>
+	<p>Prix Moyen : @{model.price}</p>
+</div>
