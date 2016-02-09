@@ -13,6 +13,7 @@ function view_index() {
 function send_request() {
 	var self = this;
 	var model = self.body;
+	console.log('model:'+JSON.stringify(model));
 	dispatcher.retrievedata(model.url, function (ad) {
 		if(ad.goodDeal){
 			self.view('index3',{ad});

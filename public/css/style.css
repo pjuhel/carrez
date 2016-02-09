@@ -66,8 +66,8 @@ h1 {
 
 
 #result_display {
-	width: 70%;
-	height: 20em;
+	width: 60%;
+	/*height: 30%;*/
 	margin: auto;
 	margin-top: 10%;
 	border-radius: 40px;
@@ -83,3 +83,37 @@ h1 {
 	font-family: 'Amaranth', Arial;
 	color: #fff;
 }
+
+.tiers {
+	/*height: 60%;*/
+	width: 33%;
+	display: inline-block;
+	margin: auto;
+}
+
+.sixieme {
+	/*height: 50%;*/
+	text-align: center;
+	font-size: 3em;
+}
+.red {
+	color: #cc3333;
+}
+
+.sep {
+	background: url(../img/separator.png) center no-repeat;
+}
+
+.good {
+	background: url(../img/good.png) center no-repeat;
+	height: 293px;
+}
+
+.bad {
+	background: url(../img/bad.png) center no-repeat;
+	height: 293px;
+}
+
+/*.odd {
+	height: 40%;
+}*/
